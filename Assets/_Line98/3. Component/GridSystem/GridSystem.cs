@@ -50,6 +50,7 @@ public class GridSystem : MonoBehaviour
 	{
 		int n = remainGrid.Count;
 		int i = Random.Range(0, n);
+		if (remainGrid.Count == 0) return null;
 		return remainGrid[i];
 	}
 

@@ -16,6 +16,7 @@ public class BallManager : MonoBehaviour
 
 	[Header("Gameloop")]
 	public ChoseGrid choseGrid;
+	public RandomQueue randomQueue;
 	private bool doneChose;
 	private bool doneMove;
 	private bool doneSpawn;
@@ -52,14 +53,28 @@ public class BallManager : MonoBehaviour
 		{
 			GridElement grid = gridSystem.GetRandomRemainGrid();
 			BaseBall ball = GetRandomBall();
-			balls[grid.x, grid.y] = ball;
-			isBallHere[grid.x, grid.y] = true;
+			// balls[grid.x, grid.y] = ball;
 			ball.transform.position = grid.transform.position + Vector3.up*1f;
-			gridSystem.TakeGrid(grid.x, grid.y);
+			// isBallHere[grid.x, grid.y] = true;
+			// gridSystem.TakeGrid(grid.x, grid.y);
+			TakeGrid(grid.x, grid.y, ball);
 
 		}
 	}
-	BaseBall GetRandomBall()
+	public void TakeGrid(int x, int y, BaseBall ball)
+	{
+		balls[x, y] = ball;
+		isBallHere[x, y] = true;
+		gridSystem.TakeGrid(x, y);
+	}
+
+	public void ReleaseGrid(int x, int y)
+	{
+		balls[x, y] = null;
+		isBallHere[x, y] = false;
+		gridSystem.ReleaseGrid(x, y);
+	}
+	public BaseBall GetRandomBall()
 	{
 		int n = ballConfig.balls.Count;
 		int idx = Random.Range(0, n);
@@ -73,31 +88,36 @@ public class BallManager : MonoBehaviour
 		int y = Random.Range(0, size);
 		return new Vector2Int(x, y);
 	}
+	
+
+	void OnFinishMove()
+	{
+		randomQueue.Spawn();
+		DoneMove = true;
+	}
 
 	IEnumerator CR_GameLoop()
 	{
 		choseGrid = GetComponent<ChoseGrid>();
+		randomQueue = GetComponent<RandomQueue>();
 		while (true)
 		{
 			DoneChose = DoneMove = DoneCheck = DoneSpawn = false;
 			choseGrid.enabled = true;
+			randomQueue.PrepareRandomBalls();
 			while (!DoneChose)
 			{
 				yield return null;
 			}
 			choseGrid.enabled = false;
-			choseGrid.chosenBall.Move(choseGrid.GetPath(), 0.6f);
-			balls[choseGrid.endGrid.x, choseGrid.endGrid.y] = balls[choseGrid.startGrid.x, choseGrid.startGrid.y];
-			isBallHere[choseGrid.endGrid.x, choseGrid.endGrid.y] = true;
-			balls[choseGrid.startGrid.x, choseGrid.startGrid.y] = null;
-			isBallHere[choseGrid.startGrid.x, choseGrid.startGrid.y] = false;
+			TakeGrid(choseGrid.endGrid.x, choseGrid.endGrid.y, choseGrid.chosenBall);
+			ReleaseGrid(choseGrid.startGrid.x, choseGrid.startGrid.y);
+			choseGrid.chosenBall.Move(choseGrid.GetPath(), 0.6f, OnFinishMove);
 			
-			// while (!DoneMove)	
-			// {
-			// 	yield return null;
-			// }
-			
-
+			while (!DoneMove)
+			{
+				yield return null;
+			}
 		}
 	}
 }

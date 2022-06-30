@@ -248,6 +248,7 @@ GameObject:
   - component: {fileID: 464160418}
   - component: {fileID: 464160420}
   - component: {fileID: 464160421}
+  - component: {fileID: 464160423}
   - component: {fileID: 464160422}
   m_Layer: 0
   m_Name: BallManager
@@ -270,8 +271,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ballConfig: {fileID: 11400000, guid: 8b3eaeea60e7f3e44a07af6fd2ac4538, type: 2}
   gridSystem: {fileID: 825554347}
-  initNumberBall: 5
+  initNumberBall: 7
   choseGrid: {fileID: 0}
+  randomQueue: {fileID: 0}
 --- !u!4 &464160419
 Transform:
   m_ObjectHideFlags: 0
@@ -331,7 +333,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballManager: {fileID: 464160418}
-  gridSystem: {fileID: 825554347}
   gridLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -384,6 +385,21 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &464160423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 464160417}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f204f918c6907748b3e5bb8764f4306, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ballManager: {fileID: 464160418}
+  gridSystem: {fileID: 825554347}
+  numberEachQueue: 3
 --- !u!1001 &565241198
 PrefabInstance:
   m_ObjectHideFlags: 0

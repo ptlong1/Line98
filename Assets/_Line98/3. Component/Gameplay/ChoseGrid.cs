@@ -5,7 +5,6 @@ using ScriptableObjectArchitecture;
 public class ChoseGrid : MonoBehaviour
 {
 	public BallManager ballManager;
-	public GridSystem gridSystem;
 	public LayerMask gridLayer;
 	public GridElement startGrid;
 	public GridElement endGrid;
@@ -45,6 +44,7 @@ public class ChoseGrid : MonoBehaviour
 				if (endGrid == null) return;
 				if (ballManager.balls[endGrid.x, endGrid.y] != null)
 				{
+					startGrid = endGrid;
 					endGrid = null;
 				}
 			}
