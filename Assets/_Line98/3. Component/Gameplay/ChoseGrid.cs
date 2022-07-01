@@ -11,6 +11,7 @@ public class ChoseGrid : MonoBehaviour
 	private BaseBall chosenBall;
 	public GameEvent OnFindPath;
 	public List<Vector2Int> resultPath;
+	public GameEvent OnChoseBall;
 
 	public BaseBall ChosenBall { 
 		get => chosenBall; 
@@ -31,7 +32,10 @@ public class ChoseGrid : MonoBehaviour
 			{
 				ChosenBall = ballManager.balls[StartGrid.x, StartGrid.y];
 				if (ChosenBall != null)
+				{
 					ChosenBall.Idle(true);
+					OnChoseBall.Raise();
+				}
 			}
 		} 
 	}

@@ -15,10 +15,13 @@ public class BaseBall : MonoBehaviour
 
 	public Animator animator;
 	public bool canBeDestroy;
+	AudioSource audioSource;
+	public ParticleSystem destroyPS;
 	// public float inQueueScale;
 	void Start()
 	{
 		animator = GetComponent<Animator>();
+		audioSource = GetComponent<AudioSource>();
 		Init();
 	}
 
@@ -52,6 +55,13 @@ public class BaseBall : MonoBehaviour
 		if (pool == null)
 			Debug.Log("Pool is null");
 		// return;
+		if (destroyPS != null)
+		{
+			ParticleSystem ps = Instantiate(destroyPS, transform.position, Quaternion.identity);
+			Destroy(ps.gameObject, 2f);
+		}
+		// gameObject.SetActive(false);
+		// DOTween.To(null, null, 0, 2f).OnComplete(() => pool.Release(this));
 		pool.Release(this);
 	}
 }

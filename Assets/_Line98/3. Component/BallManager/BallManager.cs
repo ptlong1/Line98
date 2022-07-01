@@ -34,6 +34,7 @@ public class BallManager : MonoBehaviour
 
 	[Header("Game Event")]
 	public GameEvent OnEndTurn;
+	public GameEvent OnLose;
 
 	void Start()
 	{
@@ -152,6 +153,7 @@ public class BallManager : MonoBehaviour
 			OnEndTurn.Raise();
 			if (CheckLoseCondition())
 			{
+				OnLose.Raise();
 				break;
 			}
 
@@ -168,7 +170,7 @@ public class BallManager : MonoBehaviour
 
 	bool CheckLoseCondition()
 	{
-		if (gridSystem.remainGrid.Count <= randomQueue.numberEachQueue)
+		if (gridSystem.remainGrid.Count <= 1)
 		{
 			return true;
 		}

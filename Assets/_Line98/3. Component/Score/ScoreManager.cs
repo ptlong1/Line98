@@ -2,13 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using ScriptableObjectArchitecture;
 public class ScoreManager : MonoBehaviour
 {
 	public TMP_Text currentScoreText;
 	public int currentScore;
+	int oldScore;
 	public TMP_Text highScoreText;
 	public int highScore;
-	 string highScoreKey;
+	string highScoreKey;
+	public GameEvent OnScore;
+	
     void Start()
     {
 		highScoreKey = "HIGHSCORE";
@@ -23,6 +27,11 @@ public class ScoreManager : MonoBehaviour
 		{
 			highScore = currentScore;
 			PlayerPrefs.SetInt(highScoreKey, highScore);
+		}
+		if (oldScore < currentScore)
+		{
+			oldScore = currentScore;
+			OnScore.Raise();
 		}
 		highScoreText.text = "HIGHSCORE: " + highScore.ToString();
 		currentScoreText.text = "SCORE: " + currentScore.ToString();

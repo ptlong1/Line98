@@ -15,7 +15,7 @@ public class BombBall : BaseBall
 		cdText.text = cd.ToString();
 	}
 
-	void DecreaseCountdown()
+	public void DecreaseCountdown()
 	{
 		cd--;
 		if (cd <= 0) canBeDestroy = true;

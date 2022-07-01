@@ -6,7 +6,7 @@ public class BallPoolManager : MonoBehaviour
 {
 	public List<BallPool> poolList;
 	Dictionary<int, BallPool> dicTypeBall;
-    void Start()
+    void Awake()
     {
 		dicTypeBall = new Dictionary<int, BallPool>();
 		for (int i = 0; i < poolList.Count; ++i)
@@ -17,6 +17,7 @@ public class BallPoolManager : MonoBehaviour
 
 	public BaseBall Get(int type)
 	{
+		// Debug.Log(type);
 		return dicTypeBall[type].pool.Get();
 	}
 
