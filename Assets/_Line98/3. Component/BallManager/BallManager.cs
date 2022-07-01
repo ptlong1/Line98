@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using ScriptableObjectArchitecture;
 
 public class BallManager : MonoBehaviour
 {
@@ -30,6 +31,9 @@ public class BallManager : MonoBehaviour
 
 	[Header("Score")]
 	public ScoreManager scoreManager;
+
+	[Header("Game Event")]
+	public GameEvent OnEndTurn;
 
 	void Start()
 	{
@@ -145,6 +149,7 @@ public class BallManager : MonoBehaviour
 			}
 			yield return new WaitForSeconds(0.2f);
 			CheckForScore();
+			OnEndTurn.Raise();
 			if (CheckLoseCondition())
 			{
 				break;

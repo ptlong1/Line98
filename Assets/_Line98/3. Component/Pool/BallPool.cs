@@ -30,6 +30,7 @@ public class BallPool : MonoBehaviour
 
 	void ActionOnGet(BaseBall ball)
 	{
+		ball.Init();
 		ball.gameObject.SetActive(true);
 	}
 

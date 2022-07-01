@@ -14,11 +14,19 @@ public class BaseBall : MonoBehaviour
 	public BasePool<BaseBall> pool;
 
 	public Animator animator;
+	public bool canBeDestroy;
 	// public float inQueueScale;
 	void Start()
 	{
 		animator = GetComponent<Animator>();
+		Init();
 	}
+
+	public virtual void Init()
+	{
+		canBeDestroy = true;
+	}
+
 	public void InQueue()
 	{
 		inQueue = true;
