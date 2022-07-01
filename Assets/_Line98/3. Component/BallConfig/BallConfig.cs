@@ -12,6 +12,7 @@ public class IntArray
 [CreateAssetMenu(fileName = "BallConfig", menuName ="Ball/BallConfig")]
 public class BallConfig : ScriptableObject
 {
+	public int lenToScore;
 	public List<BaseBall> balls;
 	[SerializeField]
 	public IntArray[] rightMatch;

@@ -6,6 +6,7 @@ public class BallManager : MonoBehaviour
 {
 	public BallConfig ballConfig;
 	public GridSystem gridSystem;
+	public BallPoolManager ballPoolManager;
 	public BaseBall[,] balls;
 	public bool[,] isBallHere;
 	public bool[,] lostThisTime;
@@ -26,6 +27,9 @@ public class BallManager : MonoBehaviour
 	public bool DoneMove { get => doneMove; set => doneMove = value; }
 	public bool DoneSpawn { get => doneSpawn; set => doneSpawn = value; }
 	public bool DoneCheck { get => doneCheck; set => doneCheck = value; }
+
+	[Header("Score")]
+	public ScoreManager scoreManager;
 
 	void Start()
 	{
@@ -78,7 +82,8 @@ public class BallManager : MonoBehaviour
 	{
 		int n = ballConfig.balls.Count;
 		int idx = Random.Range(0, n);
-		BaseBall newBall = Instantiate(ballConfig.balls[idx], transform);
+		// BaseBall newBall = Instantiate(ballConfig.balls[idx], transform);
+		BaseBall newBall = ballPoolManager.Get(idx);
 		return newBall;
 	}
 
@@ -96,6 +101,28 @@ public class BallManager : MonoBehaviour
 		DoneMove = true;
 	}
 
+	void CheckForScore()
+	{
+		for (int i = 0; i < size; ++i)
+			for (int j = 0; j < size; ++j)
+			{
+				if (balls[i,j] != null)
+					balls[i,j].check.Check(ballConfig, balls, new Vector2Int(i,j), lostThisTime);
+			}
+		for (int i = 0; i < size; ++i)
+			for (int j = 0; j < size; ++j)
+			{
+				if (lostThisTime[i,j])
+				{
+					balls[i,j].Disapear();
+					ReleaseGrid(i,j);
+					++scoreManager.currentScore;
+				}
+				lostThisTime[i,j] = false;
+			}
+		scoreManager.UpdateScore();
+	}
+
 	IEnumerator CR_GameLoop()
 	{
 		choseGrid = GetComponent<ChoseGrid>();
@@ -110,14 +137,35 @@ public class BallManager : MonoBehaviour
 				yield return null;
 			}
 			choseGrid.enabled = false;
-			TakeGrid(choseGrid.endGrid.x, choseGrid.endGrid.y, choseGrid.chosenBall);
-			ReleaseGrid(choseGrid.startGrid.x, choseGrid.startGrid.y);
-			choseGrid.chosenBall.Move(choseGrid.GetPath(), 0.6f, OnFinishMove);
-			
+			MoveChosenBall();
+
 			while (!DoneMove)
 			{
 				yield return null;
 			}
+			yield return new WaitForSeconds(0.2f);
+			CheckForScore();
+			if (CheckLoseCondition())
+			{
+				break;
+			}
+
 		}
+	}
+
+	private void MoveChosenBall()
+	{
+		TakeGrid(choseGrid.endGrid.x, choseGrid.endGrid.y, choseGrid.chosenBall);
+		ReleaseGrid(choseGrid.startGrid.x, choseGrid.startGrid.y);
+		choseGrid.chosenBall.Move(choseGrid.GetPath(), 0.6f, OnFinishMove);
+	}
+
+	bool CheckLoseCondition()
+	{
+		if (gridSystem.remainGrid.Count <= randomQueue.numberEachQueue)
+		{
+			return true;
+		}
+		return false;
 	}
 }

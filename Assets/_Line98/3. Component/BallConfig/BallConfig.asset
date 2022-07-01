@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: babdeb706654de548a7158b4f2709452, type: 3}
   m_Name: BallConfig
   m_EditorClassIdentifier: 
+  lenToScore: 5
   balls:
   - {fileID: 2605721817352411063, guid: 36608aa2e19c5984aa25dfccb788c2f6, type: 3}
   - {fileID: 2605721817352411063, guid: 156053727ff1c99458238d99d83b8508, type: 3}

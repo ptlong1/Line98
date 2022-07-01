@@ -11,6 +11,7 @@ public class BaseBall : MonoBehaviour
 	public BaseFindPath findPath;
 	public BaseMove move;
 	public bool inQueue;
+	public BasePool<BaseBall> pool;
 	// public float inQueueScale;
 	public void InQueue()
 	{
@@ -26,5 +27,13 @@ public class BaseBall : MonoBehaviour
 	public void Move(Vector3[] path, float duration, System.Action OnFinishCB)
 	{
 		move.Move(transform, path, duration, OnFinishCB);
+	}
+
+	public virtual void Disapear()
+	{
+		if (pool == null)
+			Debug.Log("Pool is null");
+		// return;
+		pool.Release(this);
 	}
 }
