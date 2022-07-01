@@ -105,6 +105,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2605721817352411062}
   - component: {fileID: 2605721817352411063}
+  - component: {fileID: 1312742873}
   m_Layer: 0
   m_Name: RedBall
   m_TagString: Untagged
@@ -143,3 +144,24 @@ MonoBehaviour:
   check: {fileID: 11400000, guid: b4eddb6d260125a41a676b8310139cbe, type: 2}
   findPath: {fileID: 11400000, guid: 3f9999b6df5c96642a8e4d446fd642a2, type: 2}
   move: {fileID: 11400000, guid: 91be022d907ebe34090b451460f4f090, type: 2}
+  inQueue: 0
+  animator: {fileID: 0}
+--- !u!95 &1312742873
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2605721817352411048}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2054e814f10c2e144af42e83d88eb91e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

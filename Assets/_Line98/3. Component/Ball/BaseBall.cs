@@ -12,7 +12,13 @@ public class BaseBall : MonoBehaviour
 	public BaseMove move;
 	public bool inQueue;
 	public BasePool<BaseBall> pool;
+
+	public Animator animator;
 	// public float inQueueScale;
+	void Start()
+	{
+		animator = GetComponent<Animator>();
+	}
 	public void InQueue()
 	{
 		inQueue = true;
@@ -27,6 +33,10 @@ public class BaseBall : MonoBehaviour
 	public void Move(Vector3[] path, float duration, System.Action OnFinishCB)
 	{
 		move.Move(transform, path, duration, OnFinishCB);
+	}
+	public void Idle(bool vl)
+	{
+		animator.SetBool("Idle", vl);
 	}
 
 	public virtual void Disapear()

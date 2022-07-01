@@ -155,9 +155,10 @@ public class BallManager : MonoBehaviour
 
 	private void MoveChosenBall()
 	{
-		TakeGrid(choseGrid.endGrid.x, choseGrid.endGrid.y, choseGrid.chosenBall);
-		ReleaseGrid(choseGrid.startGrid.x, choseGrid.startGrid.y);
-		choseGrid.chosenBall.Move(choseGrid.GetPath(), 0.6f, OnFinishMove);
+		TakeGrid(choseGrid.endGrid.x, choseGrid.endGrid.y, choseGrid.ChosenBall);
+		ReleaseGrid(choseGrid.StartGrid.x, choseGrid.StartGrid.y);
+		choseGrid.StartGrid = null;
+		choseGrid.ChosenBall.Move(choseGrid.GetPath(), 0.6f, OnFinishMove);
 	}
 
 	bool CheckLoseCondition()

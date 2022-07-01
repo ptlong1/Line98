@@ -12,14 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: babdeb706654de548a7158b4f2709452, type: 3}
   m_Name: BallConfig
   m_EditorClassIdentifier: 
-  lenToScore: 5
+  lenToScore: 4
   balls:
   - {fileID: 2605721817352411063, guid: 36608aa2e19c5984aa25dfccb788c2f6, type: 3}
   - {fileID: 2605721817352411063, guid: 156053727ff1c99458238d99d83b8508, type: 3}
   - {fileID: 2605721817352411063, guid: bba5688a5b78a98489e75ff387c65499, type: 3}
   - {fileID: 2605721817352411063, guid: 171b6a7ac5c8ba047ac0afd29e2ea9d8, type: 3}
+  - {fileID: 2605721817352411063, guid: cc86dbdc05540f24ba17063971f9fa67, type: 3}
+  - {fileID: 2605721817352411063, guid: d70367c669e4aae4f958a437b4ad55dc, type: 3}
+  - {fileID: 2605721817352411063, guid: d28e5b88788a8764eab6c848c9d79465, type: 3}
+  - {fileID: 2605721817352411063, guid: 052b52d1583a3704c92206ceb25be6c9, type: 3}
   rightMatch:
-  - array: 00000000
-  - array: 01000000
-  - array: 02000000
-  - array: 03000000
+  - array: 0000000004000000
+  - array: 0100000005000000
+  - array: 0200000006000000
+  - array: 0300000007000000
+  - array: 0000000004000000
+  - array: 0100000005000000
+  - array: 0200000006000000
+  - array: 0300000007000000

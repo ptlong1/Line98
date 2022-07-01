@@ -6,16 +6,40 @@ public class ChoseGrid : MonoBehaviour
 {
 	public BallManager ballManager;
 	public LayerMask gridLayer;
-	public GridElement startGrid;
+	private GridElement startGrid;
 	public GridElement endGrid;
-	public BaseBall chosenBall;
+	private BaseBall chosenBall;
 	public GameEvent OnFindPath;
 	public List<Vector2Int> resultPath;
 
-    // Start is called before the first frame update
-    void OnEnable()
+	public BaseBall ChosenBall { 
+		get => chosenBall; 
+		set 
+		{
+			chosenBall = value;
+		}
+	}
+
+	public GridElement StartGrid { get => startGrid; 
+		set {
+			if (chosenBall != null)
+			{
+				chosenBall.Idle(false);
+			}
+			startGrid = value;
+			if (startGrid != null)
+			{
+				ChosenBall = ballManager.balls[StartGrid.x, StartGrid.y];
+				if (ChosenBall != null)
+					ChosenBall.Idle(true);
+			}
+		} 
+	}
+
+	// Start is called before the first frame update
+	void OnEnable()
     {
-		startGrid = null;
+		StartGrid = null;
 		endGrid = null;
     }
 
@@ -23,20 +47,24 @@ public class ChoseGrid : MonoBehaviour
     void Update()
     {
 		bool pressThisFrame = Input.GetMouseButtonDown(0);
-		if (startGrid == null)
+		if (StartGrid == null)
 		{
 			if (pressThisFrame)
 			{
-				startGrid = Chose();
-				if (startGrid == null) return;
-				if (ballManager.balls[startGrid.x, startGrid.y] == null)
+				StartGrid = Chose();
+				if (StartGrid == null) return;
+				if (ballManager.balls[StartGrid.x, StartGrid.y] == null)
 				{
-					startGrid = null;
+					StartGrid = null;
+				}
+				else 
+				{
+					// ChosenBall = ballManager.balls[StartGrid.x, StartGrid.y];
 				}
 			}
 			return;
 		}
-		if (startGrid != null && endGrid == null)
+		if (StartGrid != null && endGrid == null)
 		{
 			if (pressThisFrame)
 			{
@@ -44,20 +72,21 @@ public class ChoseGrid : MonoBehaviour
 				if (endGrid == null) return;
 				if (ballManager.balls[endGrid.x, endGrid.y] != null)
 				{
-					startGrid = endGrid;
+					StartGrid = endGrid;
+					// ChosenBall = ballManager.balls[StartGrid.x, StartGrid.y];
 					endGrid = null;
 				}
 			}
 			return;
 		}
-		if (startGrid != null && endGrid != null)
+		if (StartGrid != null && endGrid != null)
 		{
-			chosenBall = ballManager.balls[startGrid.x, startGrid.y];
+			ChosenBall = ballManager.balls[StartGrid.x, StartGrid.y];
 		
-			resultPath = chosenBall.findPath.FindPath(ballManager.isBallHere, startGrid.Position, endGrid.Position);
+			resultPath = ChosenBall.findPath.FindPath(ballManager.isBallHere, StartGrid.Position, endGrid.Position);
 			if (resultPath.Count == 0)
 			{
-				startGrid = null;
+				StartGrid = null;
 				endGrid = null;
 			}
 			else
