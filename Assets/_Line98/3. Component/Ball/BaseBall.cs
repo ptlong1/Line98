@@ -57,7 +57,7 @@ public class BaseBall : MonoBehaviour
 		// return;
 		if (destroyPS != null)
 		{
-			ParticleSystem ps = Instantiate(destroyPS, transform.position, Quaternion.identity);
+			ParticleSystem ps = Instantiate(destroyPS, transform.position, destroyPS.transform.rotation);
 			Destroy(ps.gameObject, 2f);
 		}
 		// gameObject.SetActive(false);

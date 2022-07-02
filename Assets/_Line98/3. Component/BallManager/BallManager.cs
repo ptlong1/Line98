@@ -100,11 +100,6 @@ public class BallManager : MonoBehaviour
 	}
 	
 
-	void OnFinishMove()
-	{
-		randomQueue.Spawn();
-		DoneMove = true;
-	}
 
 	void CheckForScore()
 	{
@@ -159,13 +154,40 @@ public class BallManager : MonoBehaviour
 
 		}
 	}
+	void OnFinishMove()
+	{
+		randomQueue.Spawn();
+		DoneMove = true;
+		NormalPath();
+	}
 
 	private void MoveChosenBall()
 	{
+		//hightlight the path
+		HighlightPath();
 		TakeGrid(choseGrid.endGrid.x, choseGrid.endGrid.y, choseGrid.ChosenBall);
 		ReleaseGrid(choseGrid.StartGrid.x, choseGrid.StartGrid.y);
 		choseGrid.StartGrid = null;
-		choseGrid.ChosenBall.Move(choseGrid.GetPath(), 0.6f, OnFinishMove);
+		choseGrid.ChosenBall.Move(choseGrid.GetPath3D(), 0.6f, OnFinishMove);
+	}
+
+	private void NormalPath()
+	{
+		foreach (Vector2Int v in choseGrid.resultPath)
+		{
+
+			GridElement gridElement = gridSystem.currentGrid[v.x, v.y];
+			gridElement.Normal();
+		}
+	}
+	private void HighlightPath()
+	{
+		foreach (Vector2Int v in choseGrid.resultPath)
+		{
+
+			GridElement gridElement = gridSystem.currentGrid[v.x, v.y];
+			gridElement.Highlight();
+		}
 	}
 
 	bool CheckLoseCondition()

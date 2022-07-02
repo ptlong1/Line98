@@ -99,8 +99,8 @@ public class ChoseGrid : MonoBehaviour
 			}
 		}
     }
-
-	public Vector3[] GetPath()
+		
+	public Vector3[] GetPath3D()
 	{
 		List<Vector3> res = new List<Vector3>();
 		foreach(Vector2Int v in resultPath)

@@ -46,6 +46,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 0
   y: 0
+  flatRenderer: {fileID: 8131280172379072573}
+  normalColor: {r: 0.7640174, g: 0.80043775, b: 0.9150943, a: 1}
+  highlightColor: {r: 0.9716981, g: 0.1512549, b: 0.37275735, a: 1}
 --- !u!1 &8131280172379072574
 GameObject:
   m_ObjectHideFlags: 0

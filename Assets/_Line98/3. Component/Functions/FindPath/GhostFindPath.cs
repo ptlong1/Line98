@@ -70,6 +70,7 @@ public class GhostFindPath : BaseFindPath
 				result.Add(tmp);
 				tmp = trace[tmp.x, tmp.y];
 			}
+			result.Add(tmp);
 		}
 		result.Reverse();
 		return result;
