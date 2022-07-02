@@ -19,19 +19,29 @@ public class BallConfig : ScriptableObject
 	int numberBall;
 	public bool[,] table;
 
-	private void OnValidate() {
+	void OnEnable()
+	{
+		Init();
+	}
+	private void OnValidate()
+	{
+		Init();
+	}
+
+	private void Init()
+	{
 		numberBall = balls.Count;
 		table = new bool[numberBall, numberBall];
 		for (int i = 0; i < numberBall; ++i)
-			for (int j =0; j < numberBall; ++j)
+			for (int j = 0; j < numberBall; ++j)
 			{
-				table[i,j] = false;
+				table[i, j] = false;
 			}
 		for (int i = 0; i < numberBall; ++i)
 		{
 			for (int j = 0; j < rightMatch[i].array.Length; ++j)
 			{
-				table[i,rightMatch[i].array[j]] = true;
+				table[i, rightMatch[i].array[j]] = true;
 			}
 		}
 	}
