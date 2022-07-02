@@ -17,11 +17,15 @@ public class BaseBall : MonoBehaviour
 	public bool canBeDestroy;
 	AudioSource audioSource;
 	public ParticleSystem destroyPS;
+	public int particleType;
+	public ParticlePoolManager particlePoolManager;
+	ParticleSystem ps;
 	// public float inQueueScale;
 	void Start()
 	{
 		animator = GetComponent<Animator>();
 		audioSource = GetComponent<AudioSource>();
+		particlePoolManager = FindObjectOfType<ParticlePoolManager>();
 		Init();
 	}
 
@@ -57,11 +61,20 @@ public class BaseBall : MonoBehaviour
 		// return;
 		if (destroyPS != null)
 		{
-			ParticleSystem ps = Instantiate(destroyPS, transform.position, destroyPS.transform.rotation);
-			Destroy(ps.gameObject, 2f);
+			// ParticleSystem ps = Instantiate(destroyPS, transform.position, destroyPS.transform.rotation);
+			ps = particlePoolManager.Get(particleType);
+			ps.transform.position = transform.position;
+			// Destroy(ps.gameObject, 2f);
+			StartCoroutine(CR_PSDisapear(2f));
 		}
 		// gameObject.SetActive(false);
 		// DOTween.To(null, null, 0, 2f).OnComplete(() => pool.Release(this));
 		pool.Release(this);
+	}
+
+	IEnumerator CR_PSDisapear(float sec)
+	{
+		yield return new WaitForSeconds(sec);
+		ps.GetComponent<ReturnToPool>().Disapear();
 	}
 }
